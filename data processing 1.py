@@ -124,7 +124,7 @@ def calculate_volatility_measures(
     )
 
     # pick last close per (base,quote,date) by ordering open_time desc
-    rn_window = window.Window.partitionBy('base_currency', 'quote_currency', 'date').orderBy(F.col('open_time').desc())
+    rn_window = window.window.partitionBy('base_currency', 'quote_currency', 'date').orderBy(F.col('open_time').desc())
     spark_daily = (
         spark_daily
         .withColumn('_rn', row_number().over(rn_window))
